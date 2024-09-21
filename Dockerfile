@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY /app .
 
-RUN gradle clean install
+RUN gradle clean installDist
 
 CMD ./build/install/app/bin/app
