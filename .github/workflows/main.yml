@@ -31,7 +31,7 @@ jobs:
         run: chmod +x ./cc-reporter
 
       - name: Upload coverage to CodeClimate
-        run: ./cc-reporter after-build --exit-code ${{ steps.build.outcome }} --id ${{ secrets.CC_TEST_REPORTER_ID }} || cat cc-reporter.log
+        run: ./cc-reporter after-build --exit-code 0 --id ${{ secrets.CC_TEST_REPORTER_ID }} || cat cc-reporter.log
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
