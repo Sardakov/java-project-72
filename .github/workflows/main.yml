@@ -17,8 +17,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.8
-          arguments: build
-          build-root-directory: app
+#          arguments: build
+#          build-root-directory: app
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
         env:
