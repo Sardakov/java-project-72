@@ -10,29 +10,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.8
           build-root-directory: app
-
       - name: Build project with Gradle
         run: ./app/gradlew build -p app
-
       - name: Download CC Reporter
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-reporter
-
       - name: Make CC Reporter executable
         run: chmod +x ./cc-reporter
-
       - name: Upload coverage to CodeClimate
-        run: ./cc-reporter after-build --exit-code 0 --id ${{ secrets.CC_TEST_REPORTER_ID }} || cat cc-reporter.log
-
+        run: ./cc-reporter after-build --coverage-input-type jacoco --exit-code 0 --id ${{ secrets.CC_TEST_REPORTER_ID }} || cat cc-reporter.log
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
         env:
