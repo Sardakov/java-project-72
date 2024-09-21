@@ -23,9 +23,17 @@ jobs:
 
       - name: Build project with Gradle
         run: ./app/gradlew build -p app
+      - name: Download CC Reporter
+        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-reporter
+
+      - name: Make CC Reporter executable
+        run: chmod +x ./cc-reporter
+
+      - name: Upload coverage to CodeClimate
+        run: ./cc-reporter after-build --exit-code ${{ steps.build.outcome }} --id ${{ secrets.CC_TEST_REPORTER_ID }} || cat cc-reporter.log
 
       - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v3.0.0
+        uses: paambaati/codeclimate-action@v3.0.1
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
           JACOCO_SOURCE_PATH: app/src/main/java
