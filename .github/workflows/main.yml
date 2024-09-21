@@ -22,7 +22,7 @@ jobs:
           build-root-directory: app
 
       - name: Build project with Gradle
-        run: ./gradlew build -p app
+        run: ./app/gradlew build -p app
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
