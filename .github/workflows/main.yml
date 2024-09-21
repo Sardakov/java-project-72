@@ -19,6 +19,15 @@ jobs:
           gradle-version: 8.8
 #          arguments: build
 #          build-root-directory: app
+      - name: Build project and run tests
+        id: test
+        run: ./gradlew build jacocoTestReport
+      - name: Download CC Reporter
+        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-reporter
+      - name: Make CC Reporter executable
+        run: chmod +x ./cc-reporter
+      - name: Run CC Reporter before-build
+        run: ./cc-reporter before-build
       - name: Upload coverage to CodeClimate
         run: ./cc-reporter after-build --exit-code ${{ steps.tests.outcome }} --id ${{ secrets.CC_TEST_REPORTER_ID }}
       - name: Publish code coverage
