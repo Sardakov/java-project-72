@@ -23,6 +23,7 @@ jobs:
 
       - name: Build project with Gradle
         run: ./app/gradlew build -p app
+
       - name: Download CC Reporter
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-reporter
 
