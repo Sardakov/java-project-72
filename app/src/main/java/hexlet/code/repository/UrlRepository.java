@@ -1,5 +1,5 @@
 package hexlet.code.repository;
 
-public class UrlRepository extends BaseRepository{
+public class UrlRepository extends BaseRepository {
 
 }
