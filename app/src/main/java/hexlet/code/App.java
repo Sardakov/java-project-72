@@ -31,9 +31,13 @@ public class App {
 
         var hikariConfig = new HikariConfig();
         String jdbcUrl = System.getenv("JDBC_DATABASE_URL");
+        String testEnv = System.getenv("TEST_ENV");
         String localBD = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
 
-        if (jdbcUrl == null || jdbcUrl.isEmpty()) {
+
+        if (testEnv != null && testEnv.equals("TEST")) {
+            hikariConfig.setJdbcUrl(localBD);
+        } else if (jdbcUrl == null || jdbcUrl.isEmpty()) {
             hikariConfig.setJdbcUrl(localBD);
         } else {
             hikariConfig.setJdbcUrl(jdbcUrl);

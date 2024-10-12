@@ -9,16 +9,14 @@ import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
 
 public final class AppTest {
-
     private static Javalin app;
     private final int statusSuccess = 200;
-
     @BeforeEach
     public void setUp() throws Exception {
+        System.setProperty("TEST_ENV", "TEST");
         app = App.getApp();
 
     }
-
     @Test
     void testMainPage() throws Exception {
 
@@ -27,7 +25,6 @@ public final class AppTest {
             assertThat(response.code()).isEqualTo(statusSuccess);
         });
     }
-
     @Test
     public void testUrlsPage() {
         JavalinTest.test(app, (server, client) -> {
@@ -35,5 +32,4 @@ public final class AppTest {
             assertThat(response.code()).isEqualTo(statusSuccess);
         });
     }
-
 }
