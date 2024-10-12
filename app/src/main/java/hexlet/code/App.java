@@ -5,7 +5,9 @@ import com.zaxxer.hikari.HikariDataSource;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
+import hexlet.code.controller.SessionsController;
 import hexlet.code.repository.BaseRepository;
+import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
@@ -51,8 +53,11 @@ public class App {
             config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
 
-//        app.get("/", ctx -> ctx.result("Hello World"));
-        app.get("/", ctx -> ctx.render("index.jte"));
+        app.get("/", SessionsController::index);
+        app.get("/urls", SessionsController::show);
+        app.post("/urls", SessionsController::append);
+        app.get(NamedRoutes.showPath("{id}"), SessionsController::showUrl);
+
         return app;
     }
 
