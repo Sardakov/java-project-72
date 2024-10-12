@@ -24,6 +24,5 @@ jobs:
           JACOCO_SOURCE_PATH: app/src/main/java
         with:
           coverageCommand: make -C app report
-          coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
-      - name: Run CC Reporter after-build
-        run: ./cc-reporter after-build --coverage-input-type jacoco --exit-code 0 --id ${{ secrets.CC_TEST_REPORTER_ID }} || cat cc-reporter.log
+          coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+
