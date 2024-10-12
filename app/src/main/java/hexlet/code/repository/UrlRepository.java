@@ -13,7 +13,8 @@ import java.util.Optional;
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         String sql = "INSERT INTO urls (name, createdAt) VALUES (?, ?)";
-        try (var conn = dataSource.getConnection();
+//        try (var conn = dataSource.getConnection();
+        try (var conn = BaseRepository.getDataSource().getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
             Timestamp timestamp = Timestamp.valueOf(now);
@@ -29,9 +30,10 @@ public class UrlRepository extends BaseRepository {
         }
     }
 
+    //заменить на что-то по легче
     public static Optional<Url> find(String name) throws SQLException {
         var sql = "SELECT * FROM urls WHERE name = ?";
-        try (var conn = dataSource.getConnection();
+        try (var conn = BaseRepository.getDataSource().getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, name);
             var resultSet = stmt.executeQuery();
@@ -49,7 +51,7 @@ public class UrlRepository extends BaseRepository {
 
     public static Optional<Url> findId(Long id) throws SQLException {
         var sql = "SELECT * FROM urls WHERE id = ?";
-        try (var conn = dataSource.getConnection();
+        try (var conn = BaseRepository.getDataSource().getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
             var resultSet = stmt.executeQuery();
@@ -66,7 +68,7 @@ public class UrlRepository extends BaseRepository {
 
     public static List<Url> getEntities() throws SQLException {
         var sql = "SELECT * FROM urls";
-        try (var conn = dataSource.getConnection();
+        try (var conn = BaseRepository.getDataSource().getConnection();
              var stmt = conn.prepareStatement(sql)) {
             var resultSet = stmt.executeQuery();
             var result = new ArrayList<Url>();
