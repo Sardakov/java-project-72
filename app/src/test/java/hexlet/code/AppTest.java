@@ -8,13 +8,15 @@ import org.junit.jupiter.api.Test;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
 
-public class AppTest {
+public final class AppTest {
 
     private static Javalin app;
+    private final int statusSuccess = 200;
 
     @BeforeEach
     public void setUp() throws Exception {
         app = App.getApp();
+
     }
 
     @Test
@@ -22,7 +24,7 @@ public class AppTest {
 
         JavalinTest.test(app, (server, client) -> {
             var response = client.get("/");
-            assertThat(response.code()).isEqualTo(200);
+            assertThat(response.code()).isEqualTo(statusSuccess);
         });
     }
 
@@ -30,7 +32,7 @@ public class AppTest {
     public void testUrlsPage() {
         JavalinTest.test(app, (server, client) -> {
             var response = client.get("/urls");
-            assertThat(response.code()).isEqualTo(200);
+            assertThat(response.code()).isEqualTo(statusSuccess);
         });
     }
 
