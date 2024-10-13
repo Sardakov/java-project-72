@@ -13,7 +13,7 @@ public final class AppTest {
     private final int statusSuccess = 200;
     @BeforeEach
     public void setUp() throws Exception {
-        System.setProperty("TEST_ENV", "TEST");
+        System.clearProperty("JDBC_DATABASE_URL");
         app = App.getApp();
 
     }
