@@ -1,6 +1,7 @@
 package hexlet.code.repository;
 
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -77,6 +78,46 @@ public class UrlRepository extends BaseRepository {
                 var title = resultSet.getString("name");
                 var createdAt = resultSet.getTimestamp("createdAt");
                 var url = new Url(title, createdAt);
+                url.setId(id);
+                result.add(url);
+            }
+            return result;
+        }
+    }
+
+    public static List<UrlCheck> getUrlCheck() throws SQLException {
+        var sql = "SELECT * FROM url_checks";
+        try (var conn = BaseRepository.getDataSource().getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            var resultSet = stmt.executeQuery();
+            var result = new ArrayList<UrlCheck>();
+            while (resultSet.next()) {
+                var id = resultSet.getLong("id");
+                var statusCode = resultSet.getLong("statusCode");
+                var title = resultSet.getString("title");
+                var h1 = resultSet.getString("h1");
+                var description = resultSet.getString("description");
+                var urlId = resultSet.getLong("urlId");
+                var createdAt = resultSet.getTimestamp("createdAt");
+                var url = new UrlCheck(statusCode, title, h1, description, urlId, createdAt);
+                url.setId(id);
+                result.add(url);
+            }
+            return result;
+        }
+    }
+
+    public static List<UrlCheck> getUrlCheckPart() throws SQLException {
+        var sql = "SELECT * FROM url_checks";
+        try (var conn = BaseRepository.getDataSource().getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            var resultSet = stmt.executeQuery();
+            var result = new ArrayList<UrlCheck>();
+            while (resultSet.next()) {
+                var id = resultSet.getLong("id");
+                var statusCode = resultSet.getLong("statusCode");
+                var createdAt = resultSet.getTimestamp("createdAt");
+                var url = new UrlCheck(statusCode, createdAt);
                 url.setId(id);
                 result.add(url);
             }

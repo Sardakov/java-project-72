@@ -30,6 +30,10 @@ dependencies {
     }
     implementation("io.javalin:javalin-rendering:6.1.3")
 
+    implementation("com.konghq:unirest-java-bom:4.4.4")
+    compileOnly("com.konghq:unirest-java-core:4.4.4")
+    implementation("com.konghq:unirest-modules-jackson:4.4.4")
+
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.assertj:assertj-core:3.25.3")
     testImplementation("org.junit.jupiter:junit-jupiter")

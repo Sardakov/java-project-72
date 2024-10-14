@@ -21,17 +21,17 @@ content = @`
                 <tbody>
                 !{DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");}
                 @for(var url: page.getUrls())
-<%--                    !{var urlCheck = page.getChecks().get(url.getId());}--%>
+                    !{var urlCheck = (page.getChecks().size() > url.getId().intValue()) ? page.getChecks().get(url.getId().intValue()) : null;}
                     <tr>
                         <td>${url.getId()}</td>
                         <td>
                             <a href="${NamedRoutes.showPath(url.getId())}">${url.getName()}</a>
                         </td>
                         <td>
-<%--                            ${urlCheck == null ? "" : page.getChecks().get(url.getId()).getCreatedAt().format(formatter)}--%>
+                            ${urlCheck == null ? "" : page.getChecks().get(url.getId().intValue()).getCreatedAt().toLocalDateTime().format(formatter)}
                         </td>
                         <td>
-<%--                            ${urlCheck == null ? "" : String.valueOf(page.getChecks().get(url.getId()).getStatusCode())}--%>
+                            ${urlCheck == null ? "" : String.valueOf(page.getChecks().get(url.getId().intValue()).getStatusCode())}
                         </td>
                     </tr>
                 @endfor

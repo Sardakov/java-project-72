@@ -27,7 +27,7 @@ content = @`
                 </tbody>
             </table>
             <h2 class="mt-5">Проверки</h2>
-            <form method="post" action="">
+            <form method="post" action="NamedRoutes.checkSite(url.getId())">
                 <button type="submit" class="btn btn-primary">Запустить проверку</button>
             </form>
             <table class="table table-border table-hover mt-3">
@@ -43,18 +43,18 @@ content = @`
                 </thead>
                 <tbody>
 
-<%--                @for(var urlCh: page.getUrlCheckList())--%>
-<%--                    @if(urlCh.getUrlId() == page.getUrl().getId())--%>
-<%--                        <tr>--%>
-<%--                            <td>${urlCh.getId()}</td>--%>
-<%--                            <td>${urlCh.getStatusCode()}</td>--%>
-<%--                            <td>${urlCh.getTitle()}</td>--%>
-<%--                            <td>${urlCh.getH1()}</td>--%>
-<%--                            <td>${urlCh.getDescription()}</td>--%>
-<%--                            <td>${urlCh.getCreatedAt().format(formatter)}</td>--%>
-<%--                        </tr>--%>
-<%--                    @endif--%>
-<%--                @endfor--%>
+                @for(var urlCh: page.getUrlCheckList())
+                    @if(urlCh.getUrlId() == page.getUrl().getId())
+                        <tr>
+                            <td>${urlCh.getId()}</td>
+                            <td>${urlCh.getStatusCode()}</td>
+                            <td>${urlCh.getTitle()}</td>
+                            <td>${urlCh.getH1()}</td>
+                            <td>${urlCh.getDescription()}</td>
+                            <td>${urlCh.getCreatedAt().toLocalDateTime().format(formatter)}</td>
+                        </tr>
+                    @endif
+                @endfor
                 </tbody>
             </table>
         </div>
