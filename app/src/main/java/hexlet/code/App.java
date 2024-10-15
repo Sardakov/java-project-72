@@ -58,8 +58,8 @@ public class App {
         app.get("/", SessionsController::index);
         app.get("/urls", SessionsController::show);
         app.post("/urls", SessionsController::append);
-        app.get(NamedRoutes.showPath("{id}"), SessionsController::showUrl);
-        app.post(NamedRoutes.checks("{id}"), SessionsController::checksUrl);
+        app.get(NamedRoutes.showPath("{id}"), SessionsController::showUrl); //"/users/{id}
+        app.post(NamedRoutes.showPath("{id}"), SessionsController::checksUrl);
         app.post(NamedRoutes.checkSite("{id}"), SessionsController::checksUrl);
 
         return app;

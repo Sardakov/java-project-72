@@ -27,7 +27,7 @@ content = @`
                 </tbody>
             </table>
             <h2 class="mt-5">Проверки</h2>
-            <form method="post" action="NamedRoutes.checkSite(url.getId())">
+            <form method="post" action="${NamedRoutes.checkSite(page.getUrl().getId())}">
                 <button type="submit" class="btn btn-primary">Запустить проверку</button>
             </form>
             <table class="table table-border table-hover mt-3">

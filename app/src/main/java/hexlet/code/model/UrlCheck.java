@@ -29,4 +29,11 @@ public class UrlCheck {
         this.statusCode = statusCode;
         this.createdAt = createdAt;
     }
+
+    public UrlCheck(Long statusCode, String title, String h1Text, String description) {
+        this.statusCode = statusCode;
+        this.title = title;
+        this.h1 = h1Text;
+        this.description = description;
+    }
 }

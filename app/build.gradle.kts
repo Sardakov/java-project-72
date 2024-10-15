@@ -20,7 +20,9 @@ application { mainClass.set("hexlet.code.App") }
 dependencies {
     implementation("com.h2database:h2:2.2.224")
     implementation("com.zaxxer:HikariCP:5.1.0")
+    implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+
     implementation("org.apache.commons:commons-text:1.11.0")
     implementation("gg.jte:jte:3.1.9")
     implementation("org.slf4j:slf4j-simple:2.0.9")
@@ -32,7 +34,10 @@ dependencies {
 
     implementation("com.konghq:unirest-java-bom:4.4.4")
     compileOnly("com.konghq:unirest-java-core:4.4.4")
-    implementation("com.konghq:unirest-modules-jackson:4.4.4")
+    testImplementation("com.konghq:unirest-modules-gson:4.4.4")
+
+    implementation("org.jsoup:jsoup:1.15.3")
+
 
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.assertj:assertj-core:3.25.3")

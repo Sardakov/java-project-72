@@ -31,6 +31,25 @@ public class UrlRepository extends BaseRepository {
         }
     }
 
+    public static void saveUrlCheck(UrlCheck urlCheck) throws SQLException {
+        String sql = "INSERT INTO urls (name, createdAt) VALUES (?, ?)";
+//        try (var conn = dataSource.getConnection();
+        try (var conn = BaseRepository.getDataSource().getConnection();
+             var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
+            Timestamp timestamp = Timestamp.valueOf(now);
+//            preparedStatement.setString(1, urlCheck.getName());
+            preparedStatement.setTimestamp(2, timestamp);
+            preparedStatement.executeUpdate();
+            var generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                urlCheck.setId(generatedKeys.getLong(1));
+            } else {
+                throw new SQLException("DB have not returned an id after saving an entity");
+            }
+        }
+    }
+
     //заменить на что-то по легче
     public static Optional<Url> find(String name) throws SQLException {
         var sql = "SELECT * FROM urls WHERE name = ?";
