@@ -3,12 +3,13 @@ import hexlet.code.dto.BasePage;
 import hexlet.code.dto.url.UrlPage;
 import hexlet.code.dto.url.UrlsPage;
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
 import hexlet.code.repository.UrlRepository;
 
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
-import kong.unirest.core.HttpResponse;
-import kong.unirest.core.Unirest;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -58,49 +59,34 @@ public class SessionsController {
         String h1Text = "";
         String description = "";
 
-        HttpResponse<String> response2 = Unirest
-                .get(postUrl)
-                .asString();
+        try {
+            HttpResponse<String> response = Unirest.get(postUrl).asString();
+            statusCode = (long) response.getStatus();
 
-//        System.out.println("STATUS = " + response.getStatus());
+            Document doc = Jsoup.parse(response.getBody());
 
-//        try {
-//            // Отправляем запрос на указанный URL
-//            HttpResponse<String> response = Unirest.get("https://stackoverflow.com/").asString();
-//            statusCode = (long) response.getStatus();
-//            System.out.println(statusCode);
-//
-//            // Парсим HTML с помощью JSoup
-//            Document doc = Jsoup.parse(response.getBody());
-//
-//            // Извлекаем теги <title>
-//            Element titleTag = doc.selectFirst("title");
-//            if (titleTag != null) {
-//                title = titleTag.text();
-//                System.out.println(title);
-//            }
-//
-//            // Извлекаем первый <h1>
-//            Element h1Tag = doc.selectFirst("h1");
-//            if (h1Tag != null) {
-//                h1Text = h1Tag.text();
-//                System.out.println(h1Text);
-//            }
-//
-//            // Извлекаем мета-тег description
-//            Element metaDescription = doc.selectFirst("meta[name=description]");
-//            if (metaDescription != null) {
-//                description = metaDescription.attr("content");
-//                System.out.println(description);
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace(); // Обрабатываем исключения
-//        }
+            title = getElementText(doc, "title");
+            h1Text = getElementText(doc, "h1");
+            description = getMetaContent(doc, "meta[name=description]");
 
-//        var urlCheck= new UrlCheck(statusCode, title, h1Text, description);
-//        UrlRepository.saveUrlCheck(urlCheck);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        var urlCheck = new UrlCheck(statusCode, title, h1Text, description, Long.parseLong(idUrl));
+        UrlRepository.saveUrlCheck(urlCheck);
         ctx.redirect("/urls/" + idUrl);
+    }
+
+    private static String getElementText(Document doc, String tagName) {
+        Element element = doc.selectFirst(tagName);
+        return element != null ? element.text() : "";
+    }
+
+    private static String getMetaContent(Document doc, String metaName) {
+        Element element = doc.selectFirst(metaName);
+        return element != null ? element.attr("content") : "";
     }
 
     public static void show(Context ctx) throws SQLException {
@@ -120,20 +106,22 @@ public class SessionsController {
         ctx.render("url.jte", model("page", page));
     }
     public static String processUrl(String inputUrl) {
+        if (inputUrl == null || inputUrl.isEmpty()) {
+            return "";
+        }
         try {
             URI uri = new URI(inputUrl);
-            URL url = uri.toURL();
+            URL parsedUrl = uri.toURL();
 
-            String protocol = url.getProtocol();
-            String host = url.getHost();
-            int port = url.getPort();
+            StringBuilder result = new StringBuilder();
+            result.append(parsedUrl.getProtocol()).append("://").append(parsedUrl.getHost());
 
-            if (port == -1) {
-                return protocol + "://" + host;
-            } else {
-                return protocol + "://" + host + ":" + port;
+            int port = parsedUrl.getPort();
+            if (port != -1) {
+                result.append(":").append(port);
             }
 
+            return result.toString();
         } catch (Exception e) {
             return null;
         }

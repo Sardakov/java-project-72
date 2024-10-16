@@ -30,10 +30,11 @@ public class UrlCheck {
         this.createdAt = createdAt;
     }
 
-    public UrlCheck(Long statusCode, String title, String h1Text, String description) {
+    public UrlCheck(Long statusCode, String title, String h1Text, String description, Long urlId) {
         this.statusCode = statusCode;
         this.title = title;
         this.h1 = h1Text;
         this.description = description;
+        this.urlId = urlId;
     }
 }

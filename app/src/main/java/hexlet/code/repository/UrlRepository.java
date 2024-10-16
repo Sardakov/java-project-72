@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         String sql = "INSERT INTO urls (name, createdAt) VALUES (?, ?)";
-//        try (var conn = dataSource.getConnection();
         try (var conn = BaseRepository.getDataSource().getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
@@ -32,20 +32,33 @@ public class UrlRepository extends BaseRepository {
     }
 
     public static void saveUrlCheck(UrlCheck urlCheck) throws SQLException {
-        String sql = "INSERT INTO urls (name, createdAt) VALUES (?, ?)";
-//        try (var conn = dataSource.getConnection();
+        var sql = "INSERT INTO url_checks (url_id, statusCode, title, h1, "
+                + "description, createdAt) VALUES (?, ?, ?, ?, ?, ?)";
         try (var conn = BaseRepository.getDataSource().getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
-            Timestamp timestamp = Timestamp.valueOf(now);
-//            preparedStatement.setString(1, urlCheck.getName());
-            preparedStatement.setTimestamp(2, timestamp);
+
+            final int indexUrlId = 1;
+            final int indexStatusCode = 2;
+            final int indexTitle = 3;
+            final int indexH1 = 4;
+            final int indexDescription = 5;
+            final int indexTimestamp = 6;
+
+            preparedStatement.setLong(indexUrlId, urlCheck.getUrlId());
+            preparedStatement.setInt(indexStatusCode, Math.toIntExact(urlCheck.getStatusCode()));
+            preparedStatement.setString(indexTitle, urlCheck.getTitle());
+            preparedStatement.setString(indexH1, urlCheck.getH1());
+            preparedStatement.setString(indexDescription, urlCheck.getDescription());
+            var createdAt = LocalDateTime.now();
+            preparedStatement.setTimestamp(indexTimestamp, Timestamp.valueOf(createdAt));
+
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 urlCheck.setId(generatedKeys.getLong(1));
+                urlCheck.setCreatedAt(Timestamp.valueOf(createdAt));
             } else {
-                throw new SQLException("DB have not returned an id after saving an entity");
+                throw new SQLException("DB did not return an id after saving UrlCheck");
             }
         }
     }
@@ -116,7 +129,7 @@ public class UrlRepository extends BaseRepository {
                 var title = resultSet.getString("title");
                 var h1 = resultSet.getString("h1");
                 var description = resultSet.getString("description");
-                var urlId = resultSet.getLong("urlId");
+                var urlId = resultSet.getLong("url_id");
                 var createdAt = resultSet.getTimestamp("createdAt");
                 var url = new UrlCheck(statusCode, title, h1, description, urlId, createdAt);
                 url.setId(id);
