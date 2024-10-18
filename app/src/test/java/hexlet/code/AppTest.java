@@ -31,6 +31,7 @@ public final class AppTest {
 
     @BeforeAll
     public static void startMockWebServer() throws IOException {
+
         String html = Files.readString(Paths.get("src/test/resources/test.html").toAbsolutePath()).trim();
         mockWebServer = new MockWebServer();
         mockWebServer.enqueue(new MockResponse().setResponseCode(STATUS_SUCCESS).setBody(html));
@@ -44,6 +45,7 @@ public final class AppTest {
 
     @BeforeEach
     public void setUp() throws SQLException, IOException {
+        System.clearProperty("JDBC_DATABASE_URL");
         baseUrl = mockWebServer.url("/").toString();
         app = App.getApp();
     }
