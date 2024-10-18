@@ -6,4 +6,6 @@ COPY /app .
 
 RUN gradle clean installDist
 
+ENV TEST_ENV=TEST
+
 CMD ./build/install/app/bin/app
