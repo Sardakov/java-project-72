@@ -29,6 +29,14 @@ public final class AppTest {
     private static MockWebServer mockWebServer;
     private String baseUrl;
 
+
+    @BeforeEach
+    public void setUp() throws SQLException, IOException {
+        System.setProperty("TEST_ENV", "TEST");
+        baseUrl = mockWebServer.url("/").toString();
+        app = App.getApp();
+    }
+
     @BeforeAll
     public static void startMockWebServer() throws IOException {
 
@@ -43,12 +51,6 @@ public final class AppTest {
         mockWebServer.shutdown();
     }
 
-    @BeforeEach
-    public void setUp() throws SQLException, IOException {
-        System.setProperty("TEST_ENV", "TEST");
-        baseUrl = mockWebServer.url("/").toString();
-        app = App.getApp();
-    }
 
     @Test
     void testMainPage() {

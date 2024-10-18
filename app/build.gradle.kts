@@ -41,6 +41,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    testImplementation("com.h2database:h2:2.1.224")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("org.slf4j:slf4j-api:2.0.16") // Удалите старую версию, оставьте только одну
 }
