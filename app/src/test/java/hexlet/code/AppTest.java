@@ -111,7 +111,13 @@ public final class AppTest {
             assertThat(checks.getTitle()).isEqualTo("Test Title");
             assertThat(checks.getH1()).isEqualTo("Тестовый H1");
             assertThat(checks.getDescription()).isEqualTo("Test content");
+
+            var responseUrls = client.get("/urls");
+            assertThat(responseUrls.code()).isEqualTo(STATUS_SUCCESS);
+            assertThat(responseUrls.body().string()).contains(String.valueOf(checks.getStatusCode()));
         });
     }
 
 }
+
+

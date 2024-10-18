@@ -27,7 +27,7 @@
             <div class="navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
                     <a class="nav-link" href="/">Главная</a>
-                    <a class="nav-link" href="/urls">сайты</a>
+                    <a class="nav-link" href="/urls">Сайты</a>
                 </div>
             </div>
         </div>

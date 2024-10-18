@@ -96,8 +96,10 @@ public class UrlChecksRepository {
                 var id = resultSet.getLong("id");
                 var statusCode = resultSet.getLong("statusCode");
                 var createdAt = resultSet.getTimestamp("createdAt");
+                var urlId = resultSet.getLong("url_id");
                 var url = new UrlCheck(statusCode, createdAt);
                 url.setId(id);
+                url.setUrlId(urlId);
                 result.add(url);
             }
             return result;
