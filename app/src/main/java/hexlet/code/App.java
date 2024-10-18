@@ -37,10 +37,13 @@ public class App {
 
         if (testEnv != null && testEnv.equals("TEST")) {
             hikariConfig.setJdbcUrl(localBD);
+            System.out.println("Using local H2 database for tests.");
         } else if (jdbcUrl == null || jdbcUrl.isEmpty()) {
             hikariConfig.setJdbcUrl(localBD);
+            System.out.println("Using local H2 database as default.");
         } else {
             hikariConfig.setJdbcUrl(jdbcUrl);
+            System.out.println("Using PostgreSQL database: " + jdbcUrl);
         }
 
         var dataSource = new HikariDataSource(hikariConfig);
