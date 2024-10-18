@@ -4,6 +4,7 @@ import hexlet.code.dto.url.UrlPage;
 import hexlet.code.dto.url.UrlsPage;
 import hexlet.code.model.Url;
 import hexlet.code.model.UrlCheck;
+import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.repository.UrlRepository;
 
 import io.javalin.http.Context;
@@ -75,7 +76,7 @@ public class SessionsController {
         }
 
         var urlCheck = new UrlCheck(statusCode, title, h1Text, description, Long.parseLong(idUrl));
-        UrlRepository.saveUrlCheck(urlCheck);
+        UrlChecksRepository.saveUrlCheck(urlCheck);
         ctx.redirect("/urls/" + idUrl);
     }
 
@@ -91,7 +92,7 @@ public class SessionsController {
 
     public static void show(Context ctx) throws SQLException {
         var urls = UrlRepository.getEntities();
-        var urlsCheck = UrlRepository.getUrlCheckPart();
+        var urlsCheck = UrlChecksRepository.getUrlCheckPart();
         var page = new UrlsPage(urls, urlsCheck);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
         page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
@@ -99,7 +100,7 @@ public class SessionsController {
     }
     public static void showUrl(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
-        var urlsCheck = UrlRepository.getUrlCheck();
+        var urlsCheck = UrlChecksRepository.getUrlCheck();
         var url = UrlRepository.findId(id)
                 .orElseThrow(() -> new NotFoundResponse("Url not found"));
         var page = new UrlPage(url, urlsCheck);
