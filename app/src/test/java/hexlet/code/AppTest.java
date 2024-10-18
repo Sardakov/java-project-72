@@ -45,7 +45,7 @@ public final class AppTest {
 
     @BeforeEach
     public void setUp() throws SQLException, IOException {
-        System.clearProperty("JDBC_DATABASE_URL");
+        System.setProperty("TEST_ENV", "TEST");
         baseUrl = mockWebServer.url("/").toString();
         app = App.getApp();
     }
