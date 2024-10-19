@@ -32,14 +32,12 @@ public final class AppTest {
 
     @BeforeEach
     public void setUp() throws SQLException, IOException {
-        System.setProperty("TEST_ENV", "TEST");
         baseUrl = mockWebServer.url("/").toString();
         app = App.getApp();
     }
 
     @BeforeAll
     public static void startMockWebServer() throws IOException {
-
         String html = Files.readString(Paths.get("src/test/resources/test.html").toAbsolutePath()).trim();
         mockWebServer = new MockWebServer();
         mockWebServer.enqueue(new MockResponse().setResponseCode(STATUS_SUCCESS).setBody(html));

@@ -27,25 +27,16 @@ public class App {
         return Integer.valueOf(port);
     }
 
+    public static String getDBUrl() {
+        String h2DBurl = "jdbc:h2:mem:project";
+        return System.getenv().getOrDefault("JDBC_DATABASE_URL", h2DBurl);
+    }
+
     public static Javalin getApp() throws IOException, SQLException {
 
         var hikariConfig = new HikariConfig();
-        String jdbcUrl = System.getenv("JDBC_DATABASE_URL");
-        String localBD = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
-        String testEnv = System.getenv("TEST_ENV");
+        hikariConfig.setJdbcUrl(getDBUrl());
 
-
-        if (testEnv != null && testEnv.equals("TEST")) {
-            hikariConfig.setJdbcUrl(localBD);
-            System.out.println("Using local H2 database for tests.");
-            hikariConfig.setDriverClassName("org.h2.Driver");
-        } else if (jdbcUrl == null || jdbcUrl.isEmpty()) {
-            hikariConfig.setJdbcUrl(localBD);
-            System.out.println("Using local H2 database as default.");
-        } else {
-            hikariConfig.setJdbcUrl(jdbcUrl);
-            System.out.println("Using PostgreSQL database: " + jdbcUrl);
-        }
 
         var dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");
