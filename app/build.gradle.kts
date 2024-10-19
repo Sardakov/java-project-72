@@ -13,6 +13,12 @@ plugins {
 group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -22,27 +28,24 @@ application {
 }
 
 dependencies {
-    implementation("com.h2database:h2:2.2.224")
-    implementation("com.zaxxer:HikariCP:5.1.0")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
-    implementation("org.apache.commons:commons-text:1.11.0")
     implementation("gg.jte:jte:3.1.9")
-    implementation("org.slf4j:slf4j-simple:2.0.16")
-    implementation("org.postgresql:postgresql:42.7.2")
+    implementation("org.slf4j:slf4j-simple:2.0.9")
     implementation("io.javalin:javalin:6.1.3")
-    implementation("io.javalin:javalin-bundle:6.1.3") {
-        exclude(group = "ch.qos.logback")
-    }
+    implementation("io.javalin:javalin-bundle:6.1.3")
     implementation("io.javalin:javalin-rendering:6.1.3")
-    implementation("com.konghq:unirest-java:3.13.6")
-    implementation("com.konghq:unirest-java:3.11.09")
-    implementation("org.jsoup:jsoup:1.15.3")
-    testImplementation(platform("org.junit:junit-bom:5.10.3"))
-    testImplementation("org.assertj:assertj-core:3.25.3")
-    testImplementation("org.junit.jupiter:junit-jupiter")
+
+    implementation("com.h2database:h2:2.2.220")
+    implementation("com.zaxxer:HikariCP:5.1.0")
+    implementation("org.postgresql:postgresql:42.7.2")
+
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation("org.slf4j:slf4j-api:2.0.16")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
+    testImplementation("org.assertj:assertj-core:3.21.0")
+
+    implementation("com.konghq:unirest-java:3.14.5")
+    implementation("org.jsoup:jsoup:1.17.2")
+
 }
 
 tasks.test {
