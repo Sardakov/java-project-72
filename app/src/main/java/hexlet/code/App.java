@@ -38,6 +38,7 @@ public class App {
         if (testEnv != null && testEnv.equals("TEST")) {
             hikariConfig.setJdbcUrl(localBD);
             System.out.println("Using local H2 database for tests.");
+            hikariConfig.setDriverClassName("org.h2.Driver");
         } else if (jdbcUrl == null || jdbcUrl.isEmpty()) {
             hikariConfig.setJdbcUrl(localBD);
             System.out.println("Using local H2 database as default.");
