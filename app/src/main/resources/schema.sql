@@ -1,18 +1,20 @@
+DROP TABLE IF EXISTS urls CASCADE;
 DROP TABLE IF EXISTS url_checks;
-DROP TABLE IF EXISTS urls;
 
 CREATE TABLE urls (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id BIGINT GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP
+    createdAt TIMESTAMP,
+    CONSTRAINT pk_url PRIMARY KEY (id)
 );
 
 CREATE TABLE url_checks (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    url_id INT REFERENCES urls(id) ON DELETE CASCADE,
+    id BIGINT GENERATED ALWAYS AS IDENTITY,
+    url_id BIGINT REFERENCES urls (id),
     statusCode INT,
     title VARCHAR(255),
     h1 VARCHAR(255),
     description TEXT,
-    createdAt TIMESTAMP
+    createdAt TIMESTAMP,
+    CONSTRAINT pk_url_checks PRIMARY KEY (id)
 );
