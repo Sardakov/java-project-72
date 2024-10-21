@@ -8,8 +8,8 @@
 # Java project "Page Analyzer"
 #### This repository contains code for a fully functional website based on the Javalin framework.#### Data types that support: string, number, Associative array
 
-![main.png](../java-project-72/img/main.png)
+![main.png](img/main.png)
 
-![urls.png](../java-project-72/img/urls.png)
+![urls.png](/img/urls.png)
 
-![url.png](../java-project-72/img/url.png)
+![url.png](/img/url.png)
