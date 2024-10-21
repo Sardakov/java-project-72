@@ -6,7 +6,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/512e45751e25d5abcf5b/test_coverage)](https://codeclimate.com/github/Sardakov/java-project-72/test_coverage)
 
 # Java project "Page Analyzer"
-#### This repository contains code for a fully functional website based on the Javalin framework.#### Data types that support: string, number, Associative array
+#### This repository contains code for a fully functional website based on the Javalin framework.
 
 ![main.png](img/main.png)
 
