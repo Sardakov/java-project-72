@@ -33,10 +33,8 @@ public class App {
     }
 
     public static Javalin getApp() throws IOException, SQLException {
-
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(getDBUrl());
-
 
         var dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");

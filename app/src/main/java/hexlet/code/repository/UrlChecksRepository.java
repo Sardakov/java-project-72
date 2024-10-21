@@ -71,7 +71,7 @@ public class UrlChecksRepository {
     }
 
     public static Optional<UrlCheck> findFirstByUrlId(Long idUrl) throws SQLException {
-        var sql = "SELECT * FROM url_checks WHERE url_id = ? LIMIT 1";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ? ORDER BY id DESC";
         try (var conn = BaseRepository.getDataSource().getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, idUrl);

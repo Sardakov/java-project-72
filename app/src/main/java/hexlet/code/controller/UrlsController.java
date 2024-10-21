@@ -5,6 +5,7 @@ import hexlet.code.model.Url;
 import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.repository.UrlRepository;
 
+import hexlet.code.util.NamedRoutes;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 
@@ -22,18 +23,18 @@ public class UrlsController {
         if (parsedUrl == null) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
-            ctx.redirect("/");
+            ctx.redirect(NamedRoutes.rootPath());
         } else {
             if (UrlRepository.find(parsedUrl).isEmpty()) {
                 var urlLast = new Url(parsedUrl);
                 UrlRepository.save(urlLast);
                 ctx.sessionAttribute("flash", "Страница успешно добавлена");
                 ctx.sessionAttribute("flash-type", "success");
-                ctx.redirect("/urls");
+                ctx.redirect(NamedRoutes.urlsPath());
             } else {
                 ctx.sessionAttribute("flash", "Страница уже существует");
                 ctx.sessionAttribute("flash-type", "info");
-                ctx.redirect("/urls");
+                ctx.redirect(NamedRoutes.urlsPath());
             }
         }
     }
@@ -71,7 +72,6 @@ public class UrlsController {
             if (port != -1) {
                 result.append(":").append(port);
             }
-
             return result.toString();
         } catch (Exception e) {
             return null;
