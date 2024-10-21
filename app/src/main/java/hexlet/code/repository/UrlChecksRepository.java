@@ -56,9 +56,15 @@ public class UrlChecksRepository {
                 var description = resultSet.getString("description");
                 var urlId = resultSet.getLong("url_id");
                 var createdAt = resultSet.getTimestamp("created_at");
-                var url = new UrlCheck(statusCode, title, h1, description, urlId, createdAt);
-                url.setId(id);
-                result.add(url);
+                var urlCheck = new UrlCheck();
+                urlCheck.setId(id);
+                urlCheck.setStatusCode(statusCode);
+                urlCheck.setTitle(title);
+                urlCheck.setH1(h1);
+                urlCheck.setDescription(description);
+                urlCheck.setUrlId(urlId);
+                urlCheck.setCreatedAt(createdAt);
+                result.add(urlCheck);
             }
             return result;
         }
@@ -78,8 +84,14 @@ public class UrlChecksRepository {
                 var description = resultSet.getString("description");
                 var urlId = resultSet.getLong("url_id");
                 var createdAt = resultSet.getTimestamp("created_at");
-                var urlCheck = new UrlCheck(statusCode, title, h1, description, urlId, createdAt);
+                var urlCheck = new UrlCheck();
                 urlCheck.setId(id);
+                urlCheck.setStatusCode(statusCode);
+                urlCheck.setTitle(title);
+                urlCheck.setH1(h1);
+                urlCheck.setDescription(description);
+                urlCheck.setUrlId(urlId);
+                urlCheck.setCreatedAt(createdAt);
                 return Optional.of(urlCheck);
             }
         }
@@ -97,10 +109,12 @@ public class UrlChecksRepository {
                 var statusCode = resultSet.getLong("status_code");
                 var createdAt = resultSet.getTimestamp("created_at");
                 var urlId = resultSet.getLong("url_id");
-                var url = new UrlCheck(statusCode, createdAt);
-                url.setId(id);
-                url.setUrlId(urlId);
-                result.add(url);
+                var urlCheck = new UrlCheck();
+                urlCheck.setId(id);
+                urlCheck.setUrlId(urlId);
+                urlCheck.setStatusCode(statusCode);
+                urlCheck.setCreatedAt(createdAt);
+                result.add(urlCheck);
             }
             return result;
         }
