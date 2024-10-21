@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class UrlChecksRepository {
     public static void saveUrlCheck(UrlCheck urlCheck) throws SQLException {
-        var sql = "INSERT INTO url_checks (url_id, statusCode, title, h1, "
+        var sql = "INSERT INTO url_checks (url_id, status_code, title, h1, "
                 + "description, created_at) VALUES (?, ?, ?, ?, ?, ?)";
         try (var conn = BaseRepository.getDataSource().getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -50,7 +50,7 @@ public class UrlChecksRepository {
             var result = new ArrayList<UrlCheck>();
             while (resultSet.next()) {
                 var id = resultSet.getLong("id");
-                var statusCode = resultSet.getLong("statusCode");
+                var statusCode = resultSet.getLong("status_code");
                 var title = resultSet.getString("title");
                 var h1 = resultSet.getString("h1");
                 var description = resultSet.getString("description");
@@ -72,7 +72,7 @@ public class UrlChecksRepository {
             var resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 var id = resultSet.getLong("id");
-                var statusCode = resultSet.getLong("statusCode");
+                var statusCode = resultSet.getLong("status_code");
                 var title = resultSet.getString("title");
                 var h1 = resultSet.getString("h1");
                 var description = resultSet.getString("description");
@@ -94,7 +94,7 @@ public class UrlChecksRepository {
             var result = new ArrayList<UrlCheck>();
             while (resultSet.next()) {
                 var id = resultSet.getLong("id");
-                var statusCode = resultSet.getLong("statusCode");
+                var statusCode = resultSet.getLong("status_code");
                 var createdAt = resultSet.getTimestamp("created_at");
                 var urlId = resultSet.getLong("url_id");
                 var url = new UrlCheck(statusCode, createdAt);
