@@ -7,6 +7,7 @@
 
 # Java project "Page Analyzer"
 #### This repository contains code for a fully functional website based on the Javalin framework.
+-[Public access](https://java-analyzer.up.railway.app/) on a free server from Railway
 
 ![main.png](img/main.png)
 

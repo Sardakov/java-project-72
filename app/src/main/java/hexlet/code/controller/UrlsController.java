@@ -47,6 +47,7 @@ public class UrlsController {
         page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
         ctx.render("page/index.jte", model("page", page));
     }
+
     public static void showUrl(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var urlsCheck = UrlChecksRepository.getUrlCheck();
@@ -57,7 +58,8 @@ public class UrlsController {
         page.setFlashType(ctx.consumeSessionAttribute("flashType"));
         ctx.render("page/show.jte", model("page", page));
     }
-    public static String processUrl(String inputUrl) {
+
+    private static String processUrl(String inputUrl) {
         if (inputUrl == null || inputUrl.isEmpty()) {
             return "";
         }
